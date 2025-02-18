@@ -20,12 +20,9 @@ const CartContextProvider = ({ children }) => {
 
     let updatedList = existingItem
       ? list.map((el) =>
-          el.id === item.id
-            ? { ...el, quantity: el.quantity + 1 }
-            : el
+          el.id === item.id ? { ...el, quantity: el.quantity + 1 } : el
         )
       : [...list, { ...item, quantity: 1 }];
-
     saveToStorage(key, updatedList);
     return { ...state, [key]: updatedList };
   };

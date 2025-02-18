@@ -4,16 +4,18 @@ import { CiHeart } from "react-icons/ci";
 import { CartContext } from "../../context/shopLIke";
 import { toast } from "react-toastify";
 
-const SingleItem = ({ id, image, cost, payment, info,  shade,  title }) => {
+const SingleItem = ({ id, image, cost, payment, info, shade, title }) => {
   const { state, dispatch } = useContext(CartContext);
 
   // Check if item is already liked
   const isLiked = state.favorites.some((item) => item.id === id);
 
   const addToCart = () => {
+    console.log(id, payment);
+
     dispatch({
       type: "addItemToCart",
-      product: { id, image, cost, payment, info,  shade,  title },
+      item: { id, image, cost, payment, info, shade, title },
     });
     toast.success("Added to cart 🛒");
   };
@@ -25,7 +27,7 @@ const SingleItem = ({ id, image, cost, payment, info,  shade,  title }) => {
     } else {
       dispatch({
         type: "addToFavorites",
-        product: { id, image, cost, payment, info,  shade,  title },
+        product: { id, image, cost, payment, info, shade, title },
       });
       toast.success("Added to likes ❤️");
     }
@@ -34,7 +36,7 @@ const SingleItem = ({ id, image, cost, payment, info,  shade,  title }) => {
   return (
     <div className="relative flex flex-col bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all">
       <div className="relative w-full h-48">
-        <image src={image} alt={ title} className="w-full h-full object-cover" />
+        <image src={image} alt={title} className="w-full h-full object-cover" />
         <button
           onClick={toggleLike}
           className={`absolute top-3 right-3 p-2 rounded-full ${
@@ -48,9 +50,9 @@ const SingleItem = ({ id, image, cost, payment, info,  shade,  title }) => {
       </div>
 
       <div className="p-4 flex flex-col flex-grow">
-        <h2 className="text-lg font-semibold text-gray-800">{ title}</h2>
+        <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
         <p className="text-sm text-gray-500">
-          {info} | { shade}
+          {info} | {shade}
         </p>
 
         <div className="mt-auto">
